@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 
 	"ticket-booking-app/config"
@@ -27,5 +29,5 @@ func main() {
 	// Handlers
   handlers.NewEventHandler(server.Group("/event"), eventRepository)
 
-  app.Listen(":3000")
+  app.Listen(fmt.Sprintf(":%s", envConfig.ServerPort))
 }
