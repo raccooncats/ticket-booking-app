@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"context"
-	"ticket-booking-app/models"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+
+	"ticket-booking-app/models"
 )
 
 type EventHandler struct {

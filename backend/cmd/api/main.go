@@ -1,20 +1,25 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v2"
+
+	"ticket-booking-app/config"
+	"ticket-booking-app/db"
 	"ticket-booking-app/handlers"
 	"ticket-booking-app/repositories"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
+	envConfig := config.NewEnvConfig()
+	db := db.Init(envConfig, db.DbMigrator)
+
 	app :=fiber.New(fiber.Config{
 		AppName: "チケット予約",
 		ServerHeader: "Fiber",
 	})
 
 	// Repositories
-	eventRepository := repositories.NewEventRepository(nil)
+	eventRepository := repositories.NewEventRepository(db)
 
 	// Routing
 	server := app.Group("/api")
