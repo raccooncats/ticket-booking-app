@@ -143,8 +143,8 @@ func NewEventHandler(router fiber.Router, repository models.EventRepository) {
 	}
 
 	router.Get("/", handler.GetMany)
-	router.Post("/", handler.CreateOne)
 	router.Get("/:eventId", handler.GetOne)
+	router.Post("/", handler.CreateOne)
 	router.Put("/:eventId", handler.UpdateOne)
 	router.Delete("/:eventId", handler.DeleteOne)
 }
