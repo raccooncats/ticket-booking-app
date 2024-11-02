@@ -27,7 +27,7 @@ const TabLayout = () => {
     {
       showFor: [],
       name: "scan-ticket",
-      displayName: "使用済チケット",
+      displayName: "チケット読取り",
       icon: "scan",
       options: {
         headerShown: true,
