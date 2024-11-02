@@ -27,7 +27,7 @@ func (r *TicketRepository) GetMany(_ context.Context, userId uint) ([]*models.Ti
 func (r *TicketRepository) GetOne(_ context.Context, userId uint, ticketId uint) (*models.Ticket, error) {
 	ticket := &models.Ticket{}
 
-	res := r.db.Model(ticket).Where("id =?", ticketId).Where("user_id = ?", userId).Preload("Event").First(ticket)
+	res := r.db.Model(ticket).Where("id = ?", ticketId).Where("user_id = ?", userId).Preload("Event").First(ticket)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -38,6 +38,7 @@ func (r *TicketRepository) GetOne(_ context.Context, userId uint, ticketId uint)
 
 func (r *TicketRepository) CreateOne(ctx context.Context, userId uint, ticket *models.Ticket) (*models.Ticket, error) {
 	ticket.UserID = userId
+
 	res := r.db.Model(ticket).Create(ticket)
 
 	if res.Error != nil {

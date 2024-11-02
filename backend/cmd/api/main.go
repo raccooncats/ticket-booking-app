@@ -32,10 +32,12 @@ func main() {
 
 	// Routing
 	server := app.Group("/api")
+
+	// Authentication
+	handlers.NewAuthHandler(server.Group("/auth"), authService)
 	privateRoutes := server.Use(middlewares.AuthProtected(db))
 
 	// Handlers
-	handlers.NewAuthHandler(server.Group("/auth"), authService)
 	handlers.NewEventHandler(privateRoutes.Group("/event"), eventRepository)
 	handlers.NewTicketHandler(privateRoutes.Group("/ticket"), ticketRepository)
 

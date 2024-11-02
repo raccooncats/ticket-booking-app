@@ -24,7 +24,7 @@ func (h *TicketHandler) GetMany(ctx *fiber.Ctx) error {
 	tickets, err := h.repository.GetMany(context, userId)
 
 	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
 			"status":  "bad request",
 			"message": err.Error(),
 		})
@@ -47,7 +47,7 @@ func (h *TicketHandler) GetOne(ctx *fiber.Ctx) error {
 	ticket, err := h.repository.GetOne(context, userId, uint(ticketId))
 
 	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
 			"status":  "bad request",
 			"message": err.Error(),
 		})
@@ -75,7 +75,6 @@ func (h *TicketHandler) GetOne(ctx *fiber.Ctx) error {
 			"qrcode": QRCode,
 		},
 	})
-
 }
 
 func (h *TicketHandler) CreateOne(ctx *fiber.Ctx) error {
@@ -85,7 +84,7 @@ func (h *TicketHandler) CreateOne(ctx *fiber.Ctx) error {
 	userId := uint(ctx.Locals("userId").(float64))
 	ticket := &models.Ticket{}
 
-  if err := ctx.BodyParser(ticket); err != nil {
+	if err := ctx.BodyParser(ticket); err != nil {
 		return ctx.Status(fiber.StatusUnprocessableEntity).JSON(&fiber.Map{
 			"status":  "unprocessable entity",
 			"message": err.Error(),
@@ -93,30 +92,30 @@ func (h *TicketHandler) CreateOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-  ticket, err := h.repository.CreateOne(context, userId, ticket)
+	ticket, err := h.repository.CreateOne(context, userId, ticket)
 
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
-			"status":  "bad request",
+			"status":  "fail",
 			"message": err.Error(),
 			"data":    nil,
 		})
 	}
 
-  return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
-    "status":  "success",
-    "message": "Ticket created successfully",
-    "data":    ticket,
-  })
+	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
+		"status":  "success",
+		"message": "Ticket created",
+		"data":    ticket,
+	})
 }
 
 func (h *TicketHandler) ValidateOne(ctx *fiber.Ctx) error {
-	validateBody := &models.ValidateTicket{}
-
 	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
 	defer cancel()
 
-  if err := ctx.BodyParser(validateBody); err != nil {
+	validateBody := &models.ValidateTicket{}
+
+	if err := ctx.BodyParser(validateBody); err != nil {
 		return ctx.Status(fiber.StatusUnprocessableEntity).JSON(&fiber.Map{
 			"status":  "unprocessable entity",
 			"message": err.Error(),
@@ -124,10 +123,10 @@ func (h *TicketHandler) ValidateOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-  validateData := make(map[string]interface{})
+	validateData := make(map[string]interface{})
 	validateData["entered"] = true
 
-  ticket, err := h.repository.UpdateOne(context, validateBody.OwnerId, validateBody.TicketId, validateData)
+	ticket, err := h.repository.UpdateOne(context, validateBody.OwnerId, validateBody.TicketId, validateData)
 
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
@@ -137,11 +136,11 @@ func (h *TicketHandler) ValidateOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-  return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
-    "status":  "success",
-    "message": "Welcome to the show!",
-    "data":    ticket,
-  })
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
+		"status":  "success",
+		"message": "Welcome to the show!",
+		"data":    ticket,
+	})
 }
 
 func NewTicketHandler(router fiber.Router, repository models.TicketRepository) {

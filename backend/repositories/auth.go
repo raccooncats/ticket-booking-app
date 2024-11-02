@@ -20,7 +20,7 @@ func (r *AuthRepository) RegisterUser(ctx context.Context, registerData *models.
 
 	res := r.db.Model(&models.User{}).Create(user)
 
-	if res != nil {
+	if res.Error != nil {
 		return nil, res.Error
 	}
 

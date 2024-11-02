@@ -29,7 +29,7 @@ func (s *AuthService) Login(ctx context.Context, loginData *models.AuthCredentia
 		return "", nil, err
 	}
 
-	if models.MatchesHash(loginData.Password, user.Password) {
+	if !models.MatchesHash(loginData.Password, user.Password) {
 		return "", nil, fmt.Errorf("invalid credentials")
 	}
 
