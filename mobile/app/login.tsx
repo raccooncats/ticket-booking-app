@@ -5,13 +5,20 @@ import { Input } from "@/components/Input";
 import { KeyboardAvoidingView, ScrollView } from "react-native";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Text } from "@/components/Text";
+import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import { VerticalStack } from "@/components/VerticalStack";
 
 const Login = () => {
+  const { authenticate, isLoadingAuth } = useAuth();
+
   const [isAuthMode, setIsAuthMode] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  async function onAuthenticate() {
+    await authenticate(isAuthMode, email, password);
+  }
 
   const onToggleIsAuthMode = () => {
     setIsAuthMode(isAuthMode => !isAuthMode);
@@ -68,8 +75,7 @@ const Login = () => {
               />
             </VerticalStack>
 
-            {/* Todo: Finish this once we have the Auth Provider */}
-            <Button isLoading={false} onPress={() => {}}>
+            <Button isLoading={isLoadingAuth} onPress={onAuthenticate}>
               {isAuthMode ? "ログイン" : "登録"}
             </Button>
           </VerticalStack>
