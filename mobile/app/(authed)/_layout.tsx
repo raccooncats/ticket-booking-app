@@ -1,7 +1,7 @@
 import { Redirect, Stack } from "expo-router";
 
 const AppLayout = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   if (!isLoggedIn) {
     return <Redirect href="/login" />;
