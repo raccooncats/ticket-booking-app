@@ -38,7 +38,7 @@ const TabLayout = () => {
       },
     },
     {
-      showFor: [],
+      showFor: [UserRole.Attendee, UserRole.Manager],
       name: "settings",
       displayName: "設定",
       icon: "cog",
@@ -57,9 +57,7 @@ const TabLayout = () => {
           options={{
             ...tab.options,
             headerTitle: tab.displayName,
-            href: tab.showFor.includes(user?.role!)
-              ? (tab.name as Href)
-              : undefined,
+            href: tab.showFor.includes(user?.role!) ? (tab.name as Href) : null,
             tabBarLabel: ({ focused }) => (
               <Text style={{ color: focused ? "black" : "gray", fontSize: 12 }}>
                 {tab.displayName}
