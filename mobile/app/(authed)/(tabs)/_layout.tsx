@@ -1,13 +1,17 @@
 import { ComponentProps } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Tabs } from "expo-router";
 import { Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "@/context/AuthContext";
+import { UserRole } from "@/types/user";
 
 const TabLayout = () => {
+  const { user } = useAuth();
+
   const tabs = [
     {
-      showFor: [],
+      showFor: [UserRole.Attendee, UserRole.Manager],
       name: "(events)",
       displayName: "イベント",
       icon: "calendar",
@@ -16,7 +20,7 @@ const TabLayout = () => {
       },
     },
     {
-      showFor: [],
+      showFor: [UserRole.Attendee],
       name: "(tickets)",
       displayName: "所有チケット",
       icon: "ticket",
@@ -25,7 +29,7 @@ const TabLayout = () => {
       },
     },
     {
-      showFor: [],
+      showFor: [UserRole.Manager],
       name: "scan-ticket",
       displayName: "チケット読取り",
       icon: "scan",
@@ -52,7 +56,6 @@ const TabLayout = () => {
           options={{
             ...tab.options,
             headerTitle: tab.displayName,
-            // href: tab.showFor.includes(user?.role!) ? tab.name : null,
             tabBarLabel: ({ focused }) => (
               <Text style={{ color: focused ? "black" : "gray", fontSize: 12 }}>
                 {tab.displayName}

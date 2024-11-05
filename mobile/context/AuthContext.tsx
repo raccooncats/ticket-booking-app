@@ -18,11 +18,11 @@ interface AuthContextProps {
 
 const AuthContext = createContext({} as AuthContextProps);
 
-export function useAuth() {
+const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 
-export function AuthenticationProvider({ children }: React.PropsWithChildren) {
+const AuthenticationProvider = ({ children }: React.PropsWithChildren) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -44,11 +44,11 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
     checkIfLoggedIn();
   }, []);
 
-  async function authenticate(
+  const authenticate = async (
     isAuthMode: boolean,
     email: string,
     password: string
-  ) {
+  ) => {
     try {
       setIsLoadingAuth(true);
 
@@ -67,13 +67,13 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
     } finally {
       setIsLoadingAuth(false);
     }
-  }
+  };
 
-  async function logout() {
+  const logout = async () => {
     setIsLoggedIn(false);
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("user");
-  }
+  };
 
   return (
     <AuthContext.Provider
@@ -88,4 +88,6 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
+
+export { useAuth, AuthenticationProvider };
