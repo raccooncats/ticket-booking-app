@@ -121,7 +121,14 @@ const EventsIndex = () => {
             )}
 
             <Text fontSize={13} color="gray">
-              {event.date}
+              {new Date(event.date).toLocaleString("ja-JP", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })}
             </Text>
           </VerticalStack>
         )}
@@ -133,7 +140,7 @@ const EventsIndex = () => {
 const headerRight = () => {
   return (
     <TabBarIcon
-      size={32}
+      size={28}
       name="add-circle-outline"
       onPress={() => router.push("/(events)/new")}
     />

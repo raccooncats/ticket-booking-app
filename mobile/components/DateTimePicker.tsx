@@ -30,8 +30,31 @@ const AndroidDateTimePicker = ({
   const showDatePicker = () => {
     DateTimePickerAndroid.open({
       value: currentDate,
-      onChange: (_, date?: Date) => onChange(date || new Date()),
+      onChange: (_, date?: Date) => {
+        if (date) {
+          showTimePicker(date);
+        }
+      },
       mode: "date",
+    });
+  };
+
+  const showTimePicker = (date: Date) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange: (_, time?: Date) => {
+        if (time) {
+          const newDateTime = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            time.getHours(),
+            time.getMinutes()
+          );
+          onChange(newDateTime);
+        }
+      },
+      mode: "time",
     });
   };
 
@@ -52,7 +75,7 @@ const IOSDateTimePicker = ({ onChange, currentDate }: DateTimePickerProps) => {
       accentColor="black"
       minimumDate={new Date()}
       value={currentDate}
-      mode={"date"}
+      mode={"datetime"}
       display="default"
       onChange={(_, date) => onChange(date || new Date())}
     />

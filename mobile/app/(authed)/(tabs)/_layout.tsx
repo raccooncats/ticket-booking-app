@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Tabs } from "expo-router";
+import { Href, Tabs } from "expo-router";
 import { Text } from "react-native";
 import { useAuth } from "@/context/AuthContext";
 import { UserRole } from "@/types/user";
@@ -47,6 +47,7 @@ const TabLayout = () => {
       },
     },
   ];
+
   return (
     <Tabs>
       {tabs.map(tab => (
@@ -56,6 +57,9 @@ const TabLayout = () => {
           options={{
             ...tab.options,
             headerTitle: tab.displayName,
+            href: tab.showFor.includes(user?.role!)
+              ? (tab.name as Href)
+              : undefined,
             tabBarLabel: ({ focused }) => (
               <Text style={{ color: focused ? "black" : "gray", fontSize: 12 }}>
                 {tab.displayName}

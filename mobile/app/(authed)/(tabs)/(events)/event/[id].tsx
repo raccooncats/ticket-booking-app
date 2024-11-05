@@ -139,7 +139,7 @@ const EventDetail = () => {
 };
 
 const headerRight = (onPress: VoidFunction) => {
-  return <TabBarIcon size={30} name="trash" onPress={onPress} />;
+  return <TabBarIcon size={28} name="trash" onPress={onPress} />;
 };
 
 export default EventDetail;

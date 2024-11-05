@@ -58,8 +58,8 @@ const NewEvent = () => {
           開催場所
         </Text>
         <Input
-          value={name}
-          onChangeText={setName}
+          value={location}
+          onChangeText={setLocation}
           placeholder="開催場所"
           placeholderTextColor="darkgray"
           h={48}
