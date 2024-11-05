@@ -82,14 +82,10 @@ const TicketsIndex = () => {
                     <Text fontSize={22} bold>
                       {ticket.event.name}
                     </Text>
-                    <Text fontSize={22} bold>
-                      {" "}
-                      |{" "}
-                    </Text>
-                    <Text fontSize={16} bold>
-                      {ticket.event.location}
-                    </Text>
                   </HorizontalStack>
+                  <Text fontSize={16} bold>
+                    {ticket.event.location}
+                  </Text>
                   <Text fontSize={12}>
                     {new Date(ticket.event.date).toLocaleString()}
                   </Text>
@@ -120,7 +116,7 @@ const TicketsIndex = () => {
                   }}
                 >
                   <Text fontSize={16} bold>
-                    {ticket.entered ? "Used" : "Available"}
+                    {ticket.entered ? "使用済み" : "未使用"}
                   </Text>
                   {ticket.entered && (
                     <Text mt={12} fontSize={10}>

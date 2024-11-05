@@ -48,7 +48,7 @@ const TicketDetail = () => {
         borderRadius: 20,
       }}
     >
-      <Text fontSize={50} bold>
+      <Text fontSize={40} bold>
         {ticket.event.name}
       </Text>
       <Text fontSize={20} bold>
