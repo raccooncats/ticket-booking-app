@@ -7,6 +7,7 @@ import { HorizontalStack } from "@/components/HorizontalStack";
 import { router, useNavigation } from "expo-router";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Text } from "@/components/Text";
+import { ticketService } from "@/services/ticket";
 import { useAuth } from "@/context/AuthContext";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
@@ -23,6 +24,16 @@ const EventsIndex = () => {
   const onGoToEventPage = (id: number) => {
     if (user?.role === UserRole.Manager) {
       router.push(`/(events)/event/${id}`);
+    }
+  };
+
+  const buyTicket = async (id: number) => {
+    try {
+      await ticketService.createOne(id);
+      Alert.alert("Success", "チケットを購入しました。");
+      fetchEvents();
+    } catch (error) {
+      Alert.alert("Error", "Failed to buy ticket");
     }
   };
 
@@ -113,9 +124,9 @@ const EventsIndex = () => {
                 <Button
                   variant="outlined"
                   disabled={isLoading}
-                  onPress={() => {}}
+                  onPress={() => buyTicket(event.id)}
                 >
-                  チケットを購入する
+                  チケット購入
                 </Button>
               </VerticalStack>
             )}
