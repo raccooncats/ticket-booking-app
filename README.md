@@ -18,7 +18,29 @@
 
 ## 実行手順(開発環境)
 
-1. Docker 環境を立ち上げる
+1. **環境変数の設定**
+
+`backend` ディレクトリ直下に `.env` という名前の新しいファイルを作成し、次の内容を追加してください：
+
+```bash
+SERVER_PORT=
+
+DB_HOST=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_SSLMODE=
+
+JWT_SECRET=
+```
+
+または、以下のコマンドを実行してください：
+
+```bash
+cp backend/env backend/.env
+```
+
+2. **Docker 環境を立ち上げる**
 
 アプリケーションとデータベースを Docker で立ち上げるために、まず以下のコマンドを実行します。
 
@@ -28,7 +50,7 @@ docker compose -f backend/docker-compose.yml up -d
 
 Docker コンテナがバックグラウンドで実行されます。
 
-2. モジュールをインストールする
+3. **モジュールをインストールする**
 
 次に、フロントエンドの依存関係をインストールします。
 
@@ -36,7 +58,7 @@ Docker コンテナがバックグラウンドで実行されます。
 npm --prefix ./mobile install
 ```
 
-3. 開発サーバーを起動する
+4. **開発サーバーを起動する**
 
 次に、開発サーバーを起動します。
 
